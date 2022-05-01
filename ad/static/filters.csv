@@ -1,0 +1,5 @@
+id,name,type,label
+flexRadioFilter0,flexRadioFilter,None,None
+flexRadioFilter1,flexRadioFilter,warmFilter,Warm
+flexRadioFilter2,flexRadioFilter,coldFilter,Cold
+flexRadioFilter3,flexRadioFilter,darkFilter,Dark

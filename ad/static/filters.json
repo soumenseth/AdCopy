@@ -1,0 +1,1 @@
+[{"id": "flexRadioFilter0", "name": "flexRadioFilter", "type": "None", "label": "None"}, {"id": "flexRadioFilter1", "name": "flexRadioFilter", "type": "warmFilter", "label": "Warm"}, {"id": "flexRadioFilter2", "name": "flexRadioFilter", "type": "coldFilter", "label": "Cold"}, {"id": "flexRadioFilter3", "name": "flexRadioFilter", "type": "darkFilter", "label": "Dark"}]

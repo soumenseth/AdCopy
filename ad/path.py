@@ -1,0 +1,9 @@
+ENHANCEMENTS_PATH = "ad/static/enhancements.json"
+FILTERS_PATH = "ad/static/filters.json"
+LOGO_DIR = 'ad/static/logo'
+CTA_DIR = 'ad/static/cta'
+SHOES_DIR = 'ad/static/shoes'
+IMAGES_DIR = 'ad/static/images'
+OUTPUT_DIR = 'ad/static/output'
+STATIC_DIR = 'ad/static'
+OUTPUT_FILE = 'ad/static/output/output.jpg'

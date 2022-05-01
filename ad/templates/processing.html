@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+      <title>
+          Image Processing Page
+      </title>
+   </head>
+   <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Ad Creation</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('home_page') }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('home_page') }}">Upload</a>
+            </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" style="height: 1000px; margin-left: 20px;margin-right: 20px;margin-top: 80px;padding-bottom: 20px;">
+      <div class="col-12 col-md-8" style="background-color: rgb(45,45,45);">
+          {% if selected_image %}
+            <div class="container-fluid text-center" style="height:600px; margin-top: 20px;">
+                <img src="{{ url_for('static', filename=selected_image) }}" height="100%">
+            </div>
+          {% else %}
+            <div class="container-fluid border border-5 text-center" style="height:600px; margin-top: 20px;">
+                <a href="{{ url_for('home_page') }}" class="link-primary">Select An Image</a>
+            </div>
+          {% endif %}
+      </div>
+      <div class="col-6 col-md-4" style="background-color: rgb(45,45,45);">
+          <div class="container-fluid border border-5" style="height:960px; margin-top: 20px;">
+              <div class="col" style="margin-top: 10px;">
+                  <form id="form-process" action="{{ url_for('submit') }}" method="POST" enctype="multipart/form-data">
+                      <div class="container border border-5">
+                        <p class="fs-4">Pick A Shoe</p>
+                        {% for shoe in shoes %}
+                            <div class="form-check" style="display: inline;margin-right:5px;">
+                                <input class="form-check-input" type="radio" name={{ shoe.name }} id={{ shoe.id }} value={{ shoe.filename }} checked>
+                                <label class="form-check-label" for={{ shoe.id }}>
+                                </label>
+                                <img src="{{ url_for('static', filename=shoe.filename) }}" width="50" height="50">
+                            </div>
+                        {% endfor %}
+                      </div>
+                      <div class="container border border-5">
+                        <p class="fs-4">Pick A Logo</p>
+                        {% for logo in logos %}
+                            <div class="form-check" style="display: inline;margin-right:5px;">
+                                <input class="form-check-input" type="radio" name={{ logo.name }} id={{ logo.id }} value={{ logo.filename }} checked>
+                                <label class="form-check-label" for={{ logo.id }}>
+                                </label>
+                                <img src="{{ url_for('static', filename=logo.filename) }}" width="50" height="50">
+                            </div>
+                        {% endfor %}
+                      </div>
+                      <div class="container border border-5">
+                          <div class="form-floating mb-3">
+                              <label for="AdMessage">Enter Message</label>
+                              <input type="text" class="form-control" id="AdMessage" placeholder="Enter your message(Max 30 characters)" name="textmessage" maxlength="30">
+                          </div>
+                      </div>
+                      <div class="container border border-5">
+                        <p class="fs-4">Pick A CTA button</p>
+                        {% for cta in ctas %}
+                            <div class="form-check" style="margin-bottom: 4px;">
+                                <input class="form-check-input" type="radio" name={{ cta.name }} id= {{ cta.id }} value={{ cta.filename }} checked>
+                                <label class="form-check-label" for={{ cta.id }}>
+                                </label>
+                                <img src="{{ url_for('static', filename=cta.filename) }}" width="150px">
+                            </div>
+                        {% endfor %}
+                      </div>
+                      <div class="container border border-5">
+                          <p class="fs-4">Choose Enhance Type</p>
+                          {% for enhancement in enhancements %}
+                            <div class="form-check" style="margin-bottom: 4px;">
+                                <input checked class="form-check-input" type="radio" name={{ enhancement.name }} id= {{ enhancement.id }} value={{ enhancement.type }}>
+                                <label class="form-check-label" for={{ enhancement.id }}>
+                                    {{ enhancement.label }}
+                                </label>
+                            </div>
+                          {% endfor %}
+                      </div>
+                      <div class="container border border-5">
+                          <p class="fs-4">Choose Filter</p>
+                          {% for filter in filters %}
+                            <div class="form-check" style="margin-bottom: 4px;">
+                                <input checked class="form-check-input" type="radio" name={{ filter.name }} id= {{ filter.id }} value={{ filter.type }}>
+                                <label class="form-check-label" for={{ filter.id }} style="color:white;">
+                                    {{ filter.label }}
+                                </label>
+                            </div>
+                          {% endfor %}
+                      </div>
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                    <input type="hidden" class="hidden" name="bg_image" value="{{ selected_image }}">
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+
+      <!-- Future Content here -->
+
+
+
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+   </body>
+   <style>
+      body {
+      background-color: #212121;
+      color: white
+      }
+   </style>
+</html>

@@ -1,9 +1,19 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, make_response
 from ad import app
 import os
 from ad.utils import *
 from ad.path import *
 
+
+@app.after_request
+def add_header(response):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
+    response.headers['Cache-Control'] = 'public, max-age=0'
+    return response
 
 @app.route('/')
 @app.route('/home')
@@ -65,12 +75,6 @@ def select_image():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    path_shoe = request.form['flexRadioShoes']
-    selected_logo = request.form['flexRadioLogo']
-    selected_cta = request.form['flexRadioCTA']
-    selected_enhancement = request.form['flexRadioEnhance']
-    selected_filter = request.form['flexRadioFilter']
-    message = request.form['textmessage']
 
     generate_output_image(path_background=request.form['bg_image'],
                           path_logo=request.form['flexRadioLogo'],
@@ -80,7 +84,9 @@ def submit():
                           filter_type=request.form['flexRadioFilter'],
                           message=request.form['textmessage'])
 
-    return redirect(url_for('output_page'))
+    selected_image = request.form['bg_image']
+
+    return render_template('output.html', selected_image=selected_image, output_image=OUTPUT_IMAGE)
 
 
 @app.route('/')

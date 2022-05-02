@@ -177,11 +177,15 @@ def generate_output_image(path_background, path_logo, path_cta, path_shoe, enhan
     merged = merge_image(merged, front_cta, 750, 350)
 
     ## add text
+    ad_texts_in_store = read_json(AD_TEXTS_PATH)
     position = (1200, 350)
     if message == '':
-        text = "THE ULTIMATE QUICK FIX"
+        text = ad_texts_in_store[np.random.randint(5)].strip().upper()
     else:
-        text = message.strip().upper()
+        if len(message.split(' ')) > 5:
+            text = ' '.join(message.split(' ')[:5])
+        else:
+            text = message.strip().upper()
     font_scale = 3
     color = (255, 255, 255)
     thickness = 10
@@ -202,4 +206,6 @@ def generate_output_image(path_background, path_logo, path_cta, path_shoe, enhan
                              thickness,
                              line_type)
 
+    if os.path.exists(OUTPUT_FILE):
+        os.remove(OUTPUT_FILE)
     cv2.imwrite(OUTPUT_FILE, merged)
